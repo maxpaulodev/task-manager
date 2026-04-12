@@ -19,8 +19,16 @@ public class Group{
         return name;
     }
 
-    public Task[] getList(){
-        return list;
+    public Task getTask(int index){
+        if (index < 0 || index >= groupSize) {
+            return null;
+        }
+
+        return list[index];
+    }
+
+    public int getLength(){
+        return groupSize;
     }
 
 
@@ -42,7 +50,9 @@ public class Group{
 
     public void removeTask(int position){
 
-        if(position < 0 || position >= groupSize){return;}
+        if(position < 0 || position >= groupSize){
+            return;
+        }
 
         for (int i = position; i < groupSize - 1; i++) {
             list[i] = list[i + 1];
