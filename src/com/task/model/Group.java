@@ -29,17 +29,33 @@ public class Group{
     }
 
     public void addTask(String taskName){
+
+        if (groupSize >= groupMax){
+            aumentaMax();
+        }
+
         Task task = new Task(taskName);
         list[groupSize] = task;
 
         groupSize++;
-
-        if (groupSize > groupMax){
-            aumentaMax();
-        }
     }
 
+    public void removeTask(int position){
 
+        if(position < 0 || position >= groupSize){return;}
+
+        for (int i = position; i < groupSize - 1; i++) {
+            list[i] = list[i + 1];
+        }
+
+        list[groupSize - 1] = null;
+        groupSize--;
+
+        if (list.length > 16 && groupSize < groupMax - 16){
+            reduzMax();
+        }            
+
+    }
 
     private void aumentaMax(){
         groupMax = groupMax + 16;
@@ -50,5 +66,13 @@ public class Group{
         list = newList;
     }
 
+    private void reduzMax(){
+        groupMax = groupMax - 16;
+        Task[] newList = new Task[groupMax];
+
+        System.arraycopy(list, 0, newList, 0, newList.length);
+        
+        list = newList;
+    }
 
 }
